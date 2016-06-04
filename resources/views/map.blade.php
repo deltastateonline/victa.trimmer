@@ -3,7 +3,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Victa Trimmer</title>
+    <title>Victa . National Service Directory</title>
     <link href="/css/starveling/css/starveling.css" rel="stylesheet" type="text/css"/>
 	<link href="/css/starveling/css/normalize.css" rel="stylesheet" type="text/css"/>
 	<link href="/css/sticky-footer.css" rel="stylesheet">
@@ -21,6 +21,7 @@
     <div class="row">
       <div class="twelve columns" style="margin-top: 5%">
 	   <div id="locationField" class="twelve columns">
+	   	<label>Enter an address or a suburb.</label>
 		  <input id="autocomplete" class="u-full-width" placeholder="Enter an address or a suburb"  onFocus="geolocate()" type="text"></input>
 		</div>
        </div> 
@@ -44,11 +45,11 @@
 <div style='overflow-y:scroll;height:400px'>
 <!-- ko foreach :pageTab.allItems() -->
 <div class="eachResult">
-		<strong data-bind="text:$data.company()" ></strong><br />	
+		<a href="javascript:void(0)" data-bind="click:$root.plotMap.bind($data,$parent)"><strong data-bind="text:$data.company()" ></strong></a><br />	
 		<i data-bind="text:$data.distance()"></i><i> Km</i><br />		
 		<span data-bind="text:$data.street"></span> ,<br />
 		<span data-bind="text:$data.state"></span> <span data-bind="text:$data.postcode"></span><br />
-		<span data-bind="text:$data.phone"></span>	
+		<a data-bind="href:$data.phone"><span data-bind="text:$data.phone"></span></a>	
 </div>
 <!-- /ko -->
 </div>

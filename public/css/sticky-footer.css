@@ -30,3 +30,7 @@
 	border-bottom:dashed 1px #999999;
 	background: url('/images/slBg.png') repeat-x;
 }
+.tag a:active {
+	font-size: 150%;
+	text-decoration: underline;
+}
