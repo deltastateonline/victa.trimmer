@@ -85,11 +85,11 @@
           
           $.getJSON('/repairers/?lat='+place.geometry.location.lat()+'&lng='+place.geometry.location.lng(), function(records){
         	         	 
-        	  if(records.success){
-        		  
-        		  for(i=0; i< records.rs.length; i++){
-        			  console.log(records.rs[i]);
-        		  }
+        	  if(records.success){        		  
+        		  obj.reset();
+  			      var  tmpObjectList = obj.allItems();			   
+  			      tmpObjectList =  wrapFunction(records.rs,tmpObjectList,normalFunction);
+  			      obj.allItems(tmpObjectList);  			    
         	  }
           });
 		
@@ -134,9 +134,44 @@
       }
 	  
  $(document).ready(function(){
-
-	   // jQuery methods go here...
-	 
-	 console.log($('#victaMaps'));
+	 // jQuery methods go here... 
+	
 
 });	  
+ 
+ function wrapFunction(currentArray,currentItemList,processingObject){	
+		$.each(currentArray, function( key, value ) {	    	
+			currentItemList.push(new processingObject(value));
+	    });		
+		return currentItemList;
+}
+ var normalFunction = function (inputData){
+
+		if(inputData.id !== undefined){
+			var map = ko.mapping.fromJS(inputData,mapping);
+		}else{
+			var map = ko.mapping.fromJS(inputData);
+		}		
+		return map;
+}
+ var mapping = {
+	'key': function(data){
+		return ko.utils.unwrapObservable(data.id);
+	}
+}
+ function pageModel(){
+		
+		var self = this;
+		self.allItems = ko.observableArray([]);	
+		
+		self.totalRecords = ko.computed(function(){
+			return self.allItems().length;
+		});
+		
+		self.reset = function(){		
+			return self.allItems.removeAll();	
+		}	
+
+}
+ var obj = new pageModel();
+ ko.applyBindings(obj);

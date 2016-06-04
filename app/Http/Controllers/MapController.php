@@ -48,7 +48,8 @@ class MapController extends Controller
 	    	});
     	}
     	
-    	$finalresutls->rs =  array_slice($tmpResults, 0 ,20);     	
+    	$finalresutls->rs =  array_slice($tmpResults, 0 ,20);  
+    	$finalresutls->total = count($finalresutls->rs);
     	return response()->json($finalresutls);    	
     }
    

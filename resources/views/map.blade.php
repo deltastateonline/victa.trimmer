@@ -8,9 +8,12 @@
 	<link href="/css/skeleton204/css/normalize.css" rel="stylesheet" type="text/css"/>
 	<link href="/css/sticky-footer.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Alegreya:400,700|Roboto+Condensed' rel='stylesheet' type='text/css'>
+    <script type='text/javascript' src='/scripts/knockout-3.4.0.js'></script>
+    <script type='text/javascript' src='/scripts/knockout.mapping.js'></script>    
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 	<script type="text/javascript" src="/scripts/maps.js"> </script>
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAiG-W9yHgCjc1ugC6_M3-gn1wxho8gAuM&libraries=places&callback=initAutocomplete" async defer></script>
+	
 	
 </head>  
 <body onLoad="geolocate()">  
