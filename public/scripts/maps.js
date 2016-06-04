@@ -133,12 +133,7 @@
         }
       }
 	  
- $(document).ready(function(){
-	 // jQuery methods go here... 
-	
 
-});	  
- 
  function wrapFunction(currentArray,currentItemList,processingObject){	
 		$.each(currentArray, function( key, value ) {	    	
 			currentItemList.push(new processingObject(value));
@@ -174,4 +169,8 @@
 
 }
  var obj = new pageModel();
- ko.applyBindings(obj);
+ 
+$(document).ready(function(){
+	 // jQuery methods go here... 	
+	 ko.applyBindings(obj);
+});	
