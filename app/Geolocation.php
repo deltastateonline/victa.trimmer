@@ -59,7 +59,7 @@ class Geolocation {
 			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
 			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-			curl_setopt($curl, CURLOPT_REFERER, 'http://local.adjustitapi.com/repairer');
+			curl_setopt($curl, CURLOPT_REFERER, 'http://deltastateonline.com');
 			curl_setopt($curl, CURLOPT_AUTOREFERER, true);
 			curl_setopt($curl, CURLOPT_TIMEOUT, 60);
 

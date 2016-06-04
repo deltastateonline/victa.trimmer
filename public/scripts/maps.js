@@ -84,8 +84,13 @@
          
           
           $.getJSON('/repairers/?lat='+place.geometry.location.lat()+'&lng='+place.geometry.location.lng(), function(records){
-        	  
-        	  console.log(records);
+        	         	 
+        	  if(records.success){
+        		  
+        		  for(i=0; i< records.rs.length; i++){
+        			  console.log(records.rs[i]);
+        		  }
+        	  }
           });
 		
 		/*
