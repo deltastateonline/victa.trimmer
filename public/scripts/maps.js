@@ -83,16 +83,18 @@
           marker.setPosition(place.geometry.location);
           marker.setVisible(true);
           
-          $_RM.startPoint = place.geometry.location ; //new google.maps.LatLng(28.694004, 77.110291);
-         
+          $_RM.startPoint = place.geometry.location ; //Set the stating point
+          
+          $('#victaMaps').loadmask('Loading Repairers, please wait...'); 
           
           $.getJSON('/repairers/?lat='+place.geometry.location.lat()+'&lng='+place.geometry.location.lng(), function(records){
-        	         	 
+        	  
         	  if(records.success){        		  
         		  obj.reset();
   			      var  tmpObjectList = obj.allItems();			   
   			      tmpObjectList =  wrapFunction(records.rs,tmpObjectList,normalFunction);
-  			      obj.allItems(tmpObjectList);  			    
+  			      obj.allItems(tmpObjectList);  
+  			    $('#victaMaps').unloadmask();
         	  }
           });		
       }
