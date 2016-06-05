@@ -161,6 +161,8 @@
 	self.allItems = ko.observableArray([]);
 	self.currentSelection = new currentPoint({});
 	
+	self.currentSelectionId = ko.observable();	
+	
 	self.totalRecords = ko.computed(function(){
 		return self.allItems().length;
 	});
@@ -171,10 +173,14 @@
 	
 	self.plotMap = function(rootObject, mapPoint){
 		
-		self.currentSelection.init(mapPoint);
+		//self.currentSelection.init(mapPoint);
+		
+		$('#victaMaps').loadmask('Loading Route, please wait...');
 		
 		 var cMapPoint = ko.toJS(mapPoint);		 
-		 var centrePoint = {lat: parseFloat(cMapPoint.lat), lng: parseFloat(cMapPoint.lng)};		
+		 var centrePoint = {lat: parseFloat(cMapPoint.lat), lng: parseFloat(cMapPoint.lng)};
+		 
+		 self.currentSelectionId(cMapPoint.id)
 		 
 		 $_RM.endPoint = new google.maps.LatLng(centrePoint.lat, centrePoint.lng);
 
@@ -187,6 +193,7 @@
 		 $_RM.directionsService.route(request, function(response, status) {
 	        if (status == google.maps.DirectionsStatus.OK) {
 	        	$_RM.directionsDisplay.setDirections(response);
+	        	$('#victaMaps').unloadmask();
 	        }
 	    });	
 		 

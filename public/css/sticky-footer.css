@@ -30,7 +30,11 @@
 	border-bottom:dashed 1px #999999;
 	background: url('/images/slBg.png') repeat-x;
 }
-.tag a:active {
-	font-size: 150%;
+.panelSelected {
+	border:dashed 1px #999999;
+}
+
+.panelSelected a {
+	font-size: 110%;
 	text-decoration: underline;
 }

@@ -7,10 +7,12 @@
     <link href="/css/starveling/css/starveling.css" rel="stylesheet" type="text/css"/>
 	<link href="/css/starveling/css/normalize.css" rel="stylesheet" type="text/css"/>
 	<link href="/css/sticky-footer.css" rel="stylesheet">
+	<link href="/css/jquery.loadmask.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Alegreya:400,700|Roboto+Condensed' rel='stylesheet' type='text/css'>
     <script type='text/javascript' src='/scripts/knockout-3.4.0.js'></script>
     <script type='text/javascript' src='/scripts/knockout.mapping.js'></script>    
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script type='text/javascript' src='/scripts/jquery.loadmask.js'></script>    
 	<script type="text/javascript" src="/scripts/maps.js"> </script>
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAiG-W9yHgCjc1ugC6_M3-gn1wxho8gAuM&libraries=places&callback=initAutocomplete" async defer></script>
 	
@@ -42,11 +44,11 @@
 
 <script id="resultsTmpl" type="text/html">
 <!-- ko if :pageTab.totalRecords() > 0 -->
-<div style='overflow-y:scroll;height:400px'>
+<div style='overflow-y:scroll;height:400px' id='resultDiv'>
 <!-- ko foreach :pageTab.allItems() -->
-<div class="eachResult">
-		<a href="javascript:void(0)" data-bind="click:$root.plotMap.bind($data,$parent)"><strong data-bind="text:$data.company()" ></strong></a><br />	
-		<i data-bind="text:$data.distance()"></i><i> Km</i><br />		
+<div class="eachResult" data-bind="css:{panelSelected: $data.id() == pageTab.currentSelectionId()}">
+		<a href="javascript:void(0)" data-bind="click:$root.plotMap.bind($data,$parent)"><strong data-bind="text:$data.company" ></strong></a><br />	
+		<i data-bind="text:$data.distance"></i><i> Km</i><br />		
 		<span data-bind="text:$data.street"></span> ,<br />
 		<span data-bind="text:$data.state"></span> <span data-bind="text:$data.postcode"></span><br />
 		<a data-bind="href:$data.phone"><span data-bind="text:$data.phone"></span></a>	
