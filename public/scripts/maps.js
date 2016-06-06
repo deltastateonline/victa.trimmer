@@ -12,11 +12,6 @@
     		  startPoint : {},
     		  endPoint : {}
       }
-	  
-	  /*  var mapProp = {
-			center: {lat:51.508742,lng:-0.120850},
-			zoom:5			
-		};*/
 	    
 	    var marker = null;   
 	  
@@ -85,9 +80,9 @@
           
           $_RM.startPoint = place.geometry.location ; //Set the stating point
           
-          $('#victaMaps').loadmask('Loading Repairers, please wait...'); 
+          $('#victaMaps').loadmask($_pageData.loadingMessage); 
           
-          $.getJSON('/repairers/?lat='+place.geometry.location.lat()+'&lng='+place.geometry.location.lng(), function(records){
+          $.getJSON('/'+$_pageData.serverEndPoint+'/?lat='+place.geometry.location.lat()+'&lng='+place.geometry.location.lng(), function(records){
         	  
         	  if(records.success){        		  
         		  obj.reset();

@@ -3,7 +3,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Victa . National Service Directory</title>
+    <title>{{$title}}</title>
     <link href="/css/starveling/css/starveling.css" rel="stylesheet" type="text/css"/>
 	<link href="/css/starveling/css/normalize.css" rel="stylesheet" type="text/css"/>
 	<link href="/css/sticky-footer.css" rel="stylesheet">
@@ -16,6 +16,14 @@
 	<script type="text/javascript" src="/scripts/maps.js"> </script>
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAiG-W9yHgCjc1ugC6_M3-gn1wxho8gAuM&libraries=places&callback=initAutocomplete" async defer></script>
 	
+	<script type="text/javascript">
+		var $_pageData = {
+			loadingMessage : '{{$loadingMessage}}',
+			serverEndPoint : '{{$serverController}}',
+			
+	
+		}
+	</script>
 	
 </head>  
 <body onLoad="geolocate()">  
@@ -31,7 +39,7 @@
 	<div class="row">
       <div class="twelve columns" style="margin-top: 2%">      	
       	<div class="tag">
-			<h5 style="font-size:1.3em;background-color:#FFFFFF"><center>Repairers</center></h5>
+			<h5 style="font-size:1.3em;background-color:#FFFFFF"><center>{{$companyTitle}}</center></h5>
 			<div style="font-size:0.7em;" data-bind="template:{name:'resultsTmpl', data:$root, as:'pageTab'}"></div>
 		</div>		
 		<div id="victaMaps" class="u-full-width" style="width:100%;height:500px;background-color:#EFEFEF">map here</div>	
