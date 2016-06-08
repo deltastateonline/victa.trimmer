@@ -39,16 +39,10 @@ class MapController extends Controller
     	$tmpResults = array();    	
     	
     	if(count($results) > 0){
-	    	foreach($results as $result){    		
-	    		
-	    		$theta = $result->lng - $geoData['lng'];
-	    		
-	    		$calc = sin(deg2rad($result->lat)) * sin(deg2rad($geoData['lat'])) + cos(deg2rad($result->lat)) * cos(deg2rad($geoData['lat'])) * cos(deg2rad($theta));
-	    		$calc = acos($calc);
-	    		$calc = rad2deg($calc);
-	    		
-	    		$result->distance = round( ($calc * 60 * 1.1515) * 1.609344, 2);	    		
-	    		$tmpResults[] = (array)$result;   		
+	    	foreach($results as $result){
+	    			    		
+	    		$result->distance = $this->calculate_distance($result, $geoData);		
+	    		$tmpResults[] = (array)$result;
 	    		
 	    	}
 	    	
@@ -82,13 +76,7 @@ class MapController extends Controller
     	if(count($results) > 0){
     		foreach($results as $result){
     	   
-    			$theta = $result->lng - $geoData['lng'];
-    	   
-    			$calc = sin(deg2rad($result->lat)) * sin(deg2rad($geoData['lat'])) + cos(deg2rad($result->lat)) * cos(deg2rad($geoData['lat'])) * cos(deg2rad($theta));
-    			$calc = acos($calc);
-    			$calc = rad2deg($calc);
-    	   
-    			$result->distance = round( ($calc * 60 * 1.1515) * 1.609344, 2);
+    			$result->distance = $this->calculate_distance($result, $geoData);
     			$tmpResults[] = (array)$result;
     	   
     		}
@@ -149,4 +137,22 @@ class MapController extends Controller
     	
     	//return response()->json(['name' => 'Abigail', 'state' => 'CA']);
     }
+    
+    /**
+     * 
+     * @param stdObject $result
+     * @param array() $geoData
+     * @return number
+     */
+    
+    private function calculate_distance($result, $geoData){   	
+    	
+    	$theta = $result->lng - $geoData['lng'];
+    	
+    	$calc = sin(deg2rad($result->lat)) * sin(deg2rad($geoData['lat'])) + cos(deg2rad($result->lat)) * cos(deg2rad($geoData['lat'])) * cos(deg2rad($theta));
+    	$calc = acos($calc);
+    	$calc = rad2deg($calc);   	
+    	
+    	return round( ($calc * 60 * 1.1515) * 1.609344, 2);
+    } 
 }
