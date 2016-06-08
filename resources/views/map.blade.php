@@ -29,7 +29,7 @@
 <body onLoad="geolocate()">  
 <div class="container">  
     <div class="row">
-      <div class="twelve columns" style="margin-top: 5%">
+      <div class="twelve columns" style="margin-top: 1%">
 	   <div id="locationField" class="twelve columns">
 	   	<label>Enter an address or a suburb.</label>
 		  <input id="autocomplete" class="u-full-width" placeholder="Enter an address or a suburb"  onFocus="geolocate()" type="text"></input>
@@ -37,19 +37,19 @@
        </div> 
     </div>	
 	<div class="row">
-      <div class="twelve columns" style="margin-top: 2%">      	
+      <div class="nine columns" style="margin-top: 2%">      	
       	<div class="tag">
 			<h5 style="font-size:1.3em;background-color:#FFFFFF"><center>{{$companyTitle}}</center></h5>
 			<div style="font-size:0.7em;" data-bind="template:{name:'resultsTmpl', data:$root, as:'pageTab'}"></div>
 		</div>		
 		<div id="victaMaps" class="u-full-width" style="width:100%;height:500px;background-color:#EFEFEF">map here</div>	
-       </div>        
+       </div> 
+       <div class="three columns" style="margin-top: 2%"></div>       
     </div>	
-	<div class="row">
+	<!-- <div class="row">
 		<div class='u-cf'></div>
-	</div>
+	</div> -->
 </div> 
-
 <script id="resultsTmpl" type="text/html">
 <!-- ko if :pageTab.totalRecords() > 0 -->
 <div style='overflow-y:scroll;height:400px' id='resultDiv'>
@@ -76,7 +76,28 @@
 </script>
    <footer class="footer">
       <div class="container">
-        <p class="text-muted">Render the adverts here.</p>
+	      <div style="text-align:center">
+			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+			<!-- app_deltastateonline -->
+			<ins class="adsbygoogle"
+				 style="display:inline-block;width:468px;height:60px"
+				 data-ad-client="ca-pub-0692375547011702"
+				 data-ad-slot="3497672953"></ins>
+			<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+			</div>
+			<p style="text-align:center;padding:5px;"><small >Designed By <a href="http://{{env('OUR_WEBSITE')}}">{{env('DESIGNED_BY')}}</a></small></p>
+			<script>
+			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			
+			  ga('create', 'UA-65045919-1', 'auto');
+			  ga('send', 'pageview');			
+			</script>
+        
       </div>
     </footer>
 </body>  
