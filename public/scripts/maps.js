@@ -202,4 +202,27 @@
 $(document).ready(function(){
 	 // jQuery methods go here... 	
 	 ko.applyBindings(obj);
-});	
+});
+
+//custom ko binding to display safely the object properties even if
+//they are undefined or empty
+ko.bindingHandlers.safeText = {
+	update: function (element, valueAccessor, allBindingsAccessor) {
+
+		var emptyText = ko.unwrap(allBindingsAccessor.get('emptyText')) || "";
+		var prfx = ko.unwrap(allBindingsAccessor.get('prefix')) || "";
+		var psfx = ko.unwrap(allBindingsAccessor.get('postfix')) || "";
+
+		try {
+			var tryGetValue = ko.unwrap(valueAccessor());
+			// handle empty strings
+			tryGetValue = tryGetValue.length === 0 ? emptyText : prfx + tryGetValue + psfx;
+			// and finally update the text attribute of the element
+			ko.bindingHandlers.text.update(element, function () { return tryGetValue; });
+		}
+		catch (e) {
+			// if exception occured assign emptyText to the element;
+			ko.bindingHandlers.text.update(element, function () { return emptyText; });
+		}
+	}
+};

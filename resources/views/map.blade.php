@@ -59,7 +59,9 @@
 		<i data-bind="text:$data.distance"></i><i> Km</i><br />		
 		<span data-bind="text:$data.street"></span> ,<br />
 		<span data-bind="text:$data.state"></span> <span data-bind="text:$data.postcode"></span><br />
-		<a data-bind="href:$data.phone"><span data-bind="text:$data.phone"></span></a>	
+		<span data-bind="safeText: $data.claimNo, emptyText:'N/A'" ></span> ,<br />
+		<a data-bind="href:$data.phone"><span data-bind="text:$data.phone"></span></a>
+		
 </div>
 <!-- /ko -->
 </div>
