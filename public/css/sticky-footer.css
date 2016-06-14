@@ -29,9 +29,22 @@
 }
 .panelSelected {
 	border:dashed 1px #999999;
+	background: #fefefe;
 }
 
 .panelSelected a {
 	font-size: 110%;
 	text-decoration: underline;
+}
+.directionPanel{
+	margin-top: 2%;
+	border :solid 1px #ebebeb;
+	padding :5px;
+	font-size:0.8em;
+	background: #f7f7f7;
+}
+.directionPanel label{
+	background-color:#FFFFFF;
+	text-align:center;
+	font-size:1.3em;
 }

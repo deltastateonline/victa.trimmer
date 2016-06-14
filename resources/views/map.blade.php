@@ -19,9 +19,7 @@
 	<script type="text/javascript">
 		var $_pageData = {
 			loadingMessage : '{{$loadingMessage}}',
-			serverEndPoint : '{{$serverController}}',
-			
-	
+			serverEndPoint : '{{$serverController}}',	
 		}
 	</script>
 	
@@ -37,14 +35,17 @@
        </div> 
     </div>	
 	<div class="row">
-      <div class="nine columns" style="margin-top: 2%">      	
+      <div class="eight columns" style="margin-top: 2%">      	
       	<div class="tag">
-			<h5 style="font-size:1.3em;background-color:#FFFFFF"><center>{{$companyTitle}}</center></h5>
+			<label style="font-size:1.2em;background-color:#FFFFFF"><center>{{$companyTitle}}</center></label>
 			<div style="font-size:0.7em;" data-bind="template:{name:'resultsTmpl', data:$root, as:'pageTab'}"></div>
 		</div>		
-		<div id="victaMaps" class="u-full-width" style="width:100%;height:500px;background-color:#EFEFEF">map here</div>	
+		<div id="victaMaps" class="u-full-width" style="width:100%;height:500px;background-color:#EFEFEF">Render Map Here</div>	
        </div> 
-       <div class="three columns" style="margin-top: 2%"></div>       
+       <div class="four columns directionPanel">
+       	<label>Directions</label>
+       		<div id="victaDirection" style="height:460px;overflow-y:auto;"></div>
+       	</div>       
     </div>	
 	<!-- <div class="row">
 		<div class='u-cf'></div>
@@ -55,12 +56,11 @@
 <div style='overflow-y:scroll;height:400px' id='resultDiv'>
 <!-- ko foreach :pageTab.allItems() -->
 <div class="eachResult" data-bind="css:{panelSelected: $data.id() == pageTab.currentSelectionId()}">
-		<a href="javascript:void(0)" data-bind="click:$root.plotMap.bind($data,$parent)"><strong data-bind="text:$data.company" ></strong></a><br />	
-		<i data-bind="text:$data.distance"></i><i> Km</i><br />		
-		<span data-bind="text:$data.street"></span> ,<br />
-		<span data-bind="text:$data.state"></span> <span data-bind="text:$data.postcode"></span><br />
-		<span data-bind="safeText: $data.claimNo, emptyText:'N/A'" ></span> ,<br />
-		<a data-bind="href:$data.phone"><span data-bind="text:$data.phone"></span></a>
+		<a href="javascript:void(0)" data-bind="click:$root.plotMap.bind($data,$parent)"><strong data-bind="safeText:$data.company, emptyText:'N/A'" ></strong></a><br />	
+		<i data-bind="safeText:$data.distance, emptyText:'N/A'"></i><i> Km</i><br />		
+		<span data-bind="safeText:$data.street, emptyText:'N/A'"></span> ,<br />
+		<span data-bind="safeText:$data.state, emptyText:'N/A'"></span> <span data-bind="safeText:$data.postcode, emptyText:'N/A'"></span><br />		
+		<a data-bind="href:$data.phone"><span data-bind="safeText:$data.phone, emptyText:'N/A'"></span></a>
 		
 </div>
 <!-- /ko -->

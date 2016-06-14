@@ -47,7 +47,7 @@
 		 
 		 $_RM.directionsService = new google.maps.DirectionsService;
 		 $_RM.directionsDisplay = new google.maps.DirectionsRenderer({map:mapDetails});
-		
+		 $_RM.directionsDisplay.setPanel(document.getElementById('victaDirection'));
       }  
 
       function fillInAddress() {
