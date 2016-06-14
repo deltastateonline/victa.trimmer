@@ -42,6 +42,7 @@
 	padding :5px;
 	font-size:0.8em;
 	background: #f7f7f7;
+	box-shadow: 5px 5px 2px #999999;
 }
 .directionPanel label{
 	background-color:#FFFFFF;

@@ -9,6 +9,8 @@
 	<link href="/css/sticky-footer.css" rel="stylesheet">
 	<link href="/css/jquery.loadmask.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Alegreya:400,700|Roboto+Condensed' rel='stylesheet' type='text/css'>
+   
+	<script src="https://use.fontawesome.com/9a293d9ea0.js"></script>   
     <script type='text/javascript' src='/scripts/knockout-3.4.0.js'></script>
     <script type='text/javascript' src='/scripts/knockout.mapping.js'></script>    
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
@@ -56,8 +58,10 @@
 <div style='overflow-y:scroll;height:400px' id='resultDiv'>
 <!-- ko foreach :pageTab.allItems() -->
 <div class="eachResult" data-bind="css:{panelSelected: $data.id() == pageTab.currentSelectionId()}">
-		<a href="javascript:void(0)" data-bind="click:$root.plotMap.bind($data,$parent)"><strong data-bind="safeText:$data.company, emptyText:'N/A'" ></strong></a><br />	
-		<i data-bind="safeText:$data.distance, emptyText:'N/A'"></i><i> Km</i><br />		
+		<a href="javascript:void(0)" data-bind="click:$root.plotMap.bind($data,$parent)" title="Click for directions"><strong data-bind="safeText:$data.company, emptyText:'N/A'" ></strong></a><br />	
+		<i data-bind="safeText:$data.distance, emptyText:'N/A'"></i><i> Km</i>
+		<a class="u-pull-right" style="font-size:1.2em" href="javascript:void(0)" data-bind="click:$root.gotoMap.bind($data,$parent)" title="Open in Google Maps"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
+		<br />		
 		<span data-bind="safeText:$data.street, emptyText:'N/A'"></span> ,<br />
 		<span data-bind="safeText:$data.state, emptyText:'N/A'"></span> <span data-bind="safeText:$data.postcode, emptyText:'N/A'"></span><br />		
 		<a data-bind="href:$data.phone"><span data-bind="safeText:$data.phone, emptyText:'N/A'"></span></a>
