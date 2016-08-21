@@ -17,7 +17,11 @@ $app->get('/', function () use ($app) {
 
 $app->get('map', 'MapController@show');
 $app->get('yellowfever', 'MapController@showhealthcenters');
+$app->get('motorcycle', 'MapController@showmotocycles');
+
 $app->get('repairers', 'MapController@repairers');
 $app->get('healthcenters', 'MapController@healthcenters');
+$app->get('motorcycles', 'MapController@motorcycles');
+
 $app->get('updategeolocation', 'MapController@updategeolocation');
 

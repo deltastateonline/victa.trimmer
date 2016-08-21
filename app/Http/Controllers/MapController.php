@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Log;
 use App\User;
 use App\Geolocation;
 use Illuminate\Http\Request;
@@ -25,12 +25,25 @@ class MapController extends Controller
     	$data["serverController"] = "healthcenters";
     	return view('map',$data);
     }
+	
+	public function showmotocycles()
+    {
+    	$data["title"]="MotorCycle Service Centers Service";
+    	$data["companyTitle"] = "MotorCycle Service Centers";
+    	$data["loadingMessage"] = "Loading Service Centers, please wait...";
+    	$data["serverController"] = "motorcycles";
+    	return view('map',$data);
+    }
     
     public function repairers(Request $request){
     	
-    	$results = app('db')->select("SELECT * FROM trimmer where ! isnull(lng) and status = 1 order by company ; ");
-    	$geoData['lng']  = $request->input('lng');
+		$tableName = "yellowf_centers";
+		
+		$geoData['lng']  = $request->input('lng');
     	$geoData['lat']  = $request->input('lat');
+		
+    	$results = app('db')->select("SELECT *,{$this->_calucation_string($geoData)} FROM trimmer where ! isnull(lng) and status = 1 order by distance, company limit 20 ; ");
+    	
     	
     	$finalresutls = new \stdClass();
     	$finalresutls->success = TRUE;
@@ -41,20 +54,12 @@ class MapController extends Controller
     	if(count($results) > 0){
 	    	foreach($results as $result){
 	    			    		
-	    		$result->distance = $this->calculate_distance($result, $geoData);		
-	    		$tmpResults[] = (array)$result;
-	    		
+	    		$result->distance = sprintf("%.2f",$result->distance);	
+	    		$tmpResults[] = (array)$result;	    		
 	    	}
-	    	
-	    	usort($tmpResults, function ($a, $b) {
-	    		if ($a['distance'] == $b['distance']) {
-	    			return 0;
-	    		}
-	    		return ($a['distance'] < $b['distance']) ? -1 : 1;
-	    	});
     	}
     	
-    	$finalresutls->rs =  array_slice($tmpResults, 0 ,20);  
+    	$finalresutls->rs =  $tmpResults;
     	$finalresutls->total = count($finalresutls->rs);
     	return response()->json($finalresutls);    	
     }
@@ -63,10 +68,11 @@ class MapController extends Controller
     	
     	$tableName = "yellowf_centers";
     	 
-    	$results = app('db')->select("SELECT * FROM `".$tableName."` where ! isnull(lng) and status = 1 order by company ; ");
-    	$geoData['lng']  = $request->input('lng');
+		$geoData['lng']  = $request->input('lng');
     	$geoData['lat']  = $request->input('lat');
-    	 
+		
+    	$results = app('db')->select("SELECT *, {$this->_calucation_string($geoData)} FROM `".$tableName."` where ! isnull(lng) and status = 1 order by distance, company limit 20 ; ");
+       	 
     	$finalresutls = new \stdClass();
     	$finalresutls->success = TRUE;
     	$finalresutls->geoData =  $geoData;
@@ -76,30 +82,51 @@ class MapController extends Controller
     	if(count($results) > 0){
     		foreach($results as $result){
     	   
-    			$result->distance = $this->calculate_distance($result, $geoData);
+    			$result->distance = sprintf("%.2f",$result->distance);
     			$tmpResults[] = (array)$result;
     	   
     		}
-    
-    		usort($tmpResults, function ($a, $b) {
-    			if ($a['distance'] == $b['distance']) {
-    				return 0;
-    			}
-    			return ($a['distance'] < $b['distance']) ? -1 : 1;
-    		});
     	}
     	 
-    	$finalresutls->rs =  array_slice($tmpResults, 0 ,20);
+    	$finalresutls->rs = $tmpResults;
     	$finalresutls->total = count($finalresutls->rs);
     	return response()->json($finalresutls);
     }
-   
+	
+	public function motorcycles(Request $request){
+		
+		$tableName = "motorcycle";
+		
+		$geoData['lng']  = $request->input('lng');
+    	$geoData['lat']  = $request->input('lat');			
+    	 
+    	$results = app('db')->select("SELECT *, {$this->_calucation_string($geoData)} FROM `".$tableName."` where ! isnull(lng) and status = 1 order by distance, company limit 20  ; ");
+    
+		$finalresutls = new \stdClass();
+    	$finalresutls->success = TRUE;
+    	$finalresutls->geoData =  $geoData;
+    
+    	$tmpResults = array();	
+		
+    	if(count($results) > 0){
+    		foreach($results as $result){  
+				$result->distance = sprintf("%.2f",$result->distance);  			
+    			$tmpResults[] = (array)$result;    	   
+    		}
+    	}
+    	 
+    	$finalresutls->rs =  $tmpResults;
+    	$finalresutls->total = count($finalresutls->rs);
+    	return response()->json($finalresutls);
+		
+	}
             
     public function updategeolocation(){
     	
-    	$tableName = "yellowf_centers";
+    	//$tableName = "yellowf_centers";
+		$tableName = "motorcycle";
     	
-    	$results = app('db')->select("SELECT * FROM `".$tableName."` where isnull(lng) order by company limit 50; ");
+    	$results = app('db')->select("SELECT * FROM `".$tableName."` where isnull(lng) order by company limit 20; ");
     	
     	$geolocation = new Geolocation();
     	//echo "<pre>";
@@ -135,7 +162,7 @@ class MapController extends Controller
     	echo "</ol>";
     	echo "</pre>";
     	
-    	//return response()->json(['name' => 'Abigail', 'state' => 'CA']);
+    
     }
     
     /**
@@ -154,5 +181,14 @@ class MapController extends Controller
     	$calc = rad2deg($calc);   	
     	
     	return round( ($calc * 60 * 1.1515) * 1.609344, 2);
-    } 
+    }
+	
+	private function _calucation_string($geoData){
+		$str = sprintf("(3956 * 2 * ASIN(SQRT(POWER(SIN((lat- %f) * pi()/180 / 2), 2) + 
+		COS(lat * pi()/180) *COS(%f * pi()/180) * POWER(SIN((lng - %f) * pi()/180 / 2), 2) )) * 1.609344) 
+		as distance		
+		",$geoData['lat'],$geoData['lat'],$geoData['lng']);		
+		
+		return $str;
+	}
 }
