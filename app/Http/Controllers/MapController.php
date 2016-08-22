@@ -35,67 +35,22 @@ class MapController extends Controller
     	return view('map',$data);
     }
     
-    public function repairers(Request $request){
-    	
-		$tableName = "yellowf_centers";
-		
-		$geoData['lng']  = $request->input('lng');
-    	$geoData['lat']  = $request->input('lat');
-		
-    	$results = app('db')->select("SELECT *,{$this->_calucation_string($geoData)} FROM trimmer where ! isnull(lng) and status = 1 order by distance, company limit 20 ; ");
-    	
-    	
-    	$finalresutls = new \stdClass();
-    	$finalresutls->success = TRUE;
-    	$finalresutls->geoData =  $geoData;
-    
-    	$tmpResults = array();    	
-    	
-    	if(count($results) > 0){
-	    	foreach($results as $result){
-	    			    		
-	    		$result->distance = sprintf("%.2f",$result->distance);	
-	    		$tmpResults[] = (array)$result;	    		
-	    	}
-    	}
-    	
-    	$finalresutls->rs =  $tmpResults;
-    	$finalresutls->total = count($finalresutls->rs);
-    	return response()->json($finalresutls);    	
+    public function repairers(Request $request){    	
+		$tableName = "trimmer";
+		return $this->get_results($tableName,$request );
     }
     
-    public function healthcenters(Request $request){
-    	
+    public function healthcenters(Request $request){    	
     	$tableName = "yellowf_centers";
-    	 
-		$geoData['lng']  = $request->input('lng');
-    	$geoData['lat']  = $request->input('lat');
-		
-    	$results = app('db')->select("SELECT *, {$this->_calucation_string($geoData)} FROM `".$tableName."` where ! isnull(lng) and status = 1 order by distance, company limit 20 ; ");
-       	 
-    	$finalresutls = new \stdClass();
-    	$finalresutls->success = TRUE;
-    	$finalresutls->geoData =  $geoData;
-    
-    	$tmpResults = array();
-    	 
-    	if(count($results) > 0){
-    		foreach($results as $result){
-    	   
-    			$result->distance = sprintf("%.2f",$result->distance);
-    			$tmpResults[] = (array)$result;
-    	   
-    		}
-    	}
-    	 
-    	$finalresutls->rs = $tmpResults;
-    	$finalresutls->total = count($finalresutls->rs);
-    	return response()->json($finalresutls);
+		return $this->get_results($tableName,$request );	
     }
 	
-	public function motorcycles(Request $request){
-		
+	public function motorcycles(Request $request){		
 		$tableName = "motorcycle";
+		return $this->get_results($tableName,$request );		
+	}
+	
+	private function get_results($tableName,Request $request ){
 		
 		$geoData['lng']  = $request->input('lng');
     	$geoData['lat']  = $request->input('lat');			
@@ -120,11 +75,14 @@ class MapController extends Controller
     	return response()->json($finalresutls);
 		
 	}
-            
+    /**
+     * Script to generate geolocation from database table.
+     */        
     public function updategeolocation(){
     	
+    	return;
     	//$tableName = "yellowf_centers";
-		$tableName = "motorcycle";
+		$tableName = "motorcycle"; // change this to the table name where the address are stored.
     	
     	$results = app('db')->select("SELECT * FROM `".$tableName."` where isnull(lng) order by company limit 20; ");
     	
@@ -182,7 +140,11 @@ class MapController extends Controller
     	
     	return round( ($calc * 60 * 1.1515) * 1.609344, 2);
     }
-	
+	/**
+	 * 
+	 * @param array() $geoData
+	 * @return string
+	 */
 	private function _calucation_string($geoData){
 		$str = sprintf("(3956 * 2 * ASIN(SQRT(POWER(SIN((lat- %f) * pi()/180 / 2), 2) + 
 		COS(lat * pi()/180) *COS(%f * pi()/180) * POWER(SIN((lng - %f) * pi()/180 / 2), 2) )) * 1.609344) 
