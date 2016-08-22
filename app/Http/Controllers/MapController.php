@@ -9,13 +9,15 @@ use Illuminate\Http\Request;
 class MapController extends Controller
 {
 
-    public function show()
+    public function show(Request $request)
     {
+    	$template = $request->input('layout','');   	
+    	
     	$data["title"]="Garden Machinery Directory Service";
     	$data["companyTitle"] = "Dealers";
     	$data["loadingMessage"] = "Loading Dealers, please wait...";
     	$data["serverController"] = "repairers";
-		return view('map',$data);       
+		return view('map'.$template,$data);       
     }
     public function showhealthcenters()
     {
