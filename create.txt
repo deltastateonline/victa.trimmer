@@ -1,0 +1,7 @@
+DELETE FROM Ages;
+INSERT INTO Ages (name, age) VALUES ('Harold', 35);
+INSERT INTO Ages (name, age) VALUES ('Chrislyn', 13);
+INSERT INTO Ages (name, age) VALUES ('Forbes', 21);
+INSERT INTO Ages (name, age) VALUES ('Halle', 18);
+INSERT INTO Ages (name, age) VALUES ('Corah', 25);
+INSERT INTO Ages (name, age) VALUES ('Hui', 15);
