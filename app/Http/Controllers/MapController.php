@@ -19,22 +19,24 @@ class MapController extends Controller
     	$data["serverController"] = "repairers";
 		return view('map'.$template,$data);       
     }
-    public function showhealthcenters()
+    public function showhealthcenters(Request $request)
     {
+		$template = $request->input('layout','');   
     	$data["title"]="Yellow Fever Vaccines Directory Service";
     	$data["companyTitle"] = "Medical Centers";
     	$data["loadingMessage"] = "Loading Medical Centers, please wait...";
     	$data["serverController"] = "healthcenters";
-    	return view('map',$data);
+    	return view('map'.$template,$data);
     }
 	
-	public function showmotocycles()
+	public function showmotocycles(Request $request)
     {
+		$template = $request->input('layout','');   
     	$data["title"]="MotorCycle Service Centers Service";
     	$data["companyTitle"] = "MotorCycle Service Centers";
     	$data["loadingMessage"] = "Loading Service Centers, please wait...";
     	$data["serverController"] = "motorcycles";
-    	return view('map',$data);
+    	return view('map'.$template,$data);
     }
     
     public function repairers(Request $request){    	

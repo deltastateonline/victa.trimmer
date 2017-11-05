@@ -15,6 +15,8 @@ $app->get('/', function () use ($app) {
     return $app->version();
 });
 
+$app->get('/', 'MapController@show');
+
 $app->get('map', 'MapController@show');
 $app->get('yellowfever', 'MapController@showhealthcenters');
 $app->get('motorcycle', 'MapController@showmotocycles');

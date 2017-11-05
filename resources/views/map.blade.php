@@ -28,11 +28,12 @@
 </head>  
 <body onLoad="geolocate()">  
 <div class="container">  
-	<div class="row" style="font-size:0.8em">
-	<div class="six columns">&nbsp;</div>
-		<div class="two columns"><a href="">Victa Lawn Mower Retailers</a>|</div>
-		<div class="two columns"><a href="">Yellow Fever Vaccination Centers</a>|</div>
-		<div class="two columns"><a href="">Motorcycle Service Centers</a></div>
+	<div class="row" >
+	<div class="six columns" style="font-size:2em">Directory Service In Queensland</div>
+		<div class="six columns" style="font-size:0.8em;"><br />
+		<a href="">Victa Lawn Mower Retailers</a>|
+		<a href="yellowfever">Yellow Fever Vaccination Centers</a>|
+		<a href="motorcycle">Motorcycle Service Centers</a></div>
 	</div>
     <div class="row">
       <div class="twelve columns" style="margin-top: 1%">
