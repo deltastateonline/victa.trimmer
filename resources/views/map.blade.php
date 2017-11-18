@@ -29,7 +29,7 @@
 <body onLoad="geolocate()">  
 <div class="container">  
 	<div class="row" >
-	<div class="six columns" style="font-size:2em">Directory Service In Queensland</div>
+	<div class="six columns" style="font-size:2em">{{$title}}</div>
 		<div class="six columns" style="font-size:0.8em;"><br />
 		<a href="">Victa Lawn Mower Retailers</a>|
 		<a href="yellowfever">Yellow Fever Vaccination Centers</a>|

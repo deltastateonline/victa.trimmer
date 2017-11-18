@@ -13,7 +13,7 @@ class MapController extends Controller
     {
     	$template = $request->input('layout','');   	
     	
-    	$data["title"]="Garden Machinery Directory Service";
+    	$data["title"]="Garden Machinery Directory";
     	$data["companyTitle"] = "Dealers";
     	$data["loadingMessage"] = "Loading Dealers, please wait...";
     	$data["serverController"] = "repairers";
@@ -22,7 +22,7 @@ class MapController extends Controller
     public function showhealthcenters(Request $request)
     {
 		$template = $request->input('layout','');   
-    	$data["title"]="Yellow Fever Vaccines Directory Service";
+    	$data["title"]="Yellow Fever Vaccines Directory";
     	$data["companyTitle"] = "Medical Centers";
     	$data["loadingMessage"] = "Loading Medical Centers, please wait...";
     	$data["serverController"] = "healthcenters";
@@ -32,7 +32,7 @@ class MapController extends Controller
 	public function showmotocycles(Request $request)
     {
 		$template = $request->input('layout','');   
-    	$data["title"]="MotorCycle Service Centers Service";
+    	$data["title"]="MotorCycle Service Centers";
     	$data["companyTitle"] = "MotorCycle Service Centers";
     	$data["loadingMessage"] = "Loading Service Centers, please wait...";
     	$data["serverController"] = "motorcycles";
