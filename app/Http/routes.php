@@ -25,5 +25,7 @@ $app->get('repairers', 'MapController@repairers');
 $app->get('healthcenters', 'MapController@healthcenters');
 $app->get('motorcycles', 'MapController@motorcycles');
 
+$app->get('budget', 'BudgetController@show');
+
 $app->get('updategeolocation', 'MapController@updategeolocation');
 
