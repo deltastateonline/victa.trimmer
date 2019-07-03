@@ -15,9 +15,16 @@
     <script type='text/javascript' src='/scripts/knockout.mapping.js'></script>    
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 	<script type='text/javascript' src='/scripts/jquery.loadmask.js'></script>    
+	
 	<script type="text/javascript" src="/scripts/maps.budget.js"> </script>
+	
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAiG-W9yHgCjc1ugC6_M3-gn1wxho8gAuM&libraries=places&callback=initAutocomplete" async defer></script>
 	
+	<!--
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAiG-W9yHgCjc1ugC6_M3-gn1wxho8gAuM&libraries=places&callback=initAutocomplete" async defer></script>
+	-->
+
+
 	<script type="text/javascript">
 		var $_pageData = {
 			loadingMessage : '{{$loadingMessage}}',
@@ -42,22 +49,24 @@
        </div> 
     </div>	
 	<div class="row">
-      <div class="eight columns" style="margin-top: 2%">      	
+      <div class="twelve columns" style="margin-top: 2%">      	
       	<div class="tag">
 			<label style="font-size:1.2em;background-color:#FFFFFF"><center>{{$companyTitle}}</center></label>
-			<div style="font-size:0.7em;" data-bind="template:{name:'resultsTmpl', data:$root, as:'pageTab'}"></div>
+			<div style="font-size:0.7em;" data-bind="template:{name:'budgetTmpl', data:$root, as:'pageTab'}"></div>
 		</div>		
 		<div id="victaMaps" class="u-full-width" style="width:100%;height:500px;background-color:#EFEFEF">Render Map Here</div>	
-       </div> 
-       <div class="four columns directionPanel">
-       	<label>Directions</label>
-       		<div id="victaDirection" style="height:460px;overflow-y:auto;"></div>
-       	</div>       
+       </div> 	      
     </div>	
-	<!-- <div class="row">
-		<div class='u-cf'></div>
-	</div> -->
+
 </div> 
+<script id="budgetTmpl" type="text/html">
+<!-- ko if :pageTab.totalRecords() > 0 -->
+	<div style='overflow-y:scroll;height:400px' id='resultDiv'>
+
+	</div>
+<!-- /ko -->
+
+</script>
 <script id="resultsTmpl" type="text/html">
 <!-- ko if :pageTab.totalRecords() > 0 -->
 <div style='overflow-y:scroll;height:400px' id='resultDiv'>

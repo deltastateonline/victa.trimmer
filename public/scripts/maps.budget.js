@@ -50,8 +50,7 @@
 		mapDetails = new google.maps.Map(document.getElementById("victaMaps"));
 		mapDetails.setMapTypeId(google.maps.MapTypeId.ROADMAP);
 		mapDetails.setZoom(10);  
-		mapDetails.setCenter(new google.maps.LatLng(-27.4710,153.0234 ));	
-		
+		mapDetails.setCenter(new google.maps.LatLng(-27.4710,153.0234 ));		
 		
 		 marker = new google.maps.Marker({
 	        map: mapDetails,
@@ -59,47 +58,9 @@
 			draggable:true
 	     });
 		 
-		 $_RM.directionsService = new google.maps.DirectionsService;
-		 $_RM.directionsDisplay = new google.maps.DirectionsRenderer({map:mapDetails});
-		 $_RM.directionsDisplay.setPanel(document.getElementById('victaDirection'));
-		 
-		 
-		 
-		 
-		 
-		 mapDetails.addListener('click',function(e){
-			 
-			var lat = e.latLng.lat(); // lat of clicked point
-            var lng = e.latLng.lng(); // lng of clicked point
-            var markerId = getMarkerUniqueId(lat, lng); // an that will be used to cache this marker in markers object.
-			
-			/*
-			 marker.setIcon(({
-				url: google.maps.SymbolPath.CIRCLE,
-				size: new google.maps.Size(71, 71),
-				origin: new google.maps.Point(0, 0),
-				anchor: new google.maps.Point(17, 34),
-				scaledSize: new google.maps.Size(35, 35)
-			  }));*/
-			  marker.setPosition(new google.maps.LatLng(lat, lng));
-			  marker.setVisible(true);
-			 
-		 });
-		 
-		 
-		 
-		 
-		 
-		 
-		 
+		marker.addListener('click', markerClicked);
 		 
       }  
-	  
-	  
-	  
-	  
-	  
-	  
 	  
 
       function fillInAddress() {
@@ -120,7 +81,7 @@
 	    	mapDetails.setZoom(13);  // Why 17? Because it looks good.
 	    }
         
-		/*
+		
         marker.setIcon(({
             url: place.icon,
             size: new google.maps.Size(71, 71),
@@ -132,69 +93,15 @@
           marker.setVisible(true);
           
           $_RM.startPoint = place.geometry.location ; //Set the stating point
-		  */
           
           $('#victaMaps').loadmask($_pageData.loadingMessage); 
 		  
 		  $('#victaMaps').unloadmask();
-		  
-		 
-		  
-		  /*
-          
-          $.getJSON('/'+$_pageData.serverEndPoint+'/?lat='+place.geometry.location.lat()+'&lng='+place.geometry.location.lng(), function(records){
-        	  
-        	  if(records.success){        		  
-        		  obj.reset();
-  			      var  tmpObjectList = obj.allItems();			   
-  			      tmpObjectList =  wrapFunction(records.rs,tmpObjectList,normalFunction);
-  			      obj.allItems(tmpObjectList);  
-  			    $('#victaMaps').unloadmask();
-        	  }
-          });		*/
       }
 	  
+	 
 	  
-	   /**
-         * Binds click event to given map and invokes a callback that appends a new marker to clicked location.
-         */
-        var addMarker = new google.maps.event.addListener(mapDetails, 'click', function(e) {
-            var lat = e.latLng.lat(); // lat of clicked point
-            var lng = e.latLng.lng(); // lng of clicked point
-            var markerId = getMarkerUniqueId(lat, lng); // an that will be used to cache this marker in markers object.
-            var marker = new google.maps.Marker({
-                position: getLatLng(lat, lng),
-                map: mapDetails,
-                animation: google.maps.Animation.DROP,
-                id: 'marker_' + markerId,
-                html: "    <div id='info_"+markerId+"'>\n" +
-                "        <table class=\"map1\">\n" +
-                "            <tr>\n" +
-                "                <td><a>Description:</a></td>\n" +
-                "                <td><textarea  id='manual_description' placeholder='Description'></textarea></td></tr>\n" +
-                "            <tr><td></td><td><input type='button' value='Save' onclick='saveData("+lat+","+lng+")'/></td></tr>\n" +
-                "        </table>\n" +
-                "    </div>"
-            });
-            markers[markerId] = marker; // cache marker in markers object
-            bindMarkerEvents(marker); // bind right click event to marker
-            bindMarkerinfo(marker); // bind infowindow with click event to marker
-        });
-
-        /**
-         * Binds  click event to given marker and invokes a callback function that will remove the marker from map.
-         * @param {!google.maps.Marker} marker A google.maps.Marker instance that the handler will binded.
-         */
-        var bindMarkerinfo = function(marker) {
-            new google.maps.event.addListener(marker, "click", function (point) {
-                var markerId = getMarkerUniqueId(point.latLng.lat(), point.latLng.lng()); // get marker id by using clicked point's coordinate
-                var marker = markers[markerId]; // find marker
-                infowindow = new google.maps.InfoWindow();
-                infowindow.setContent(marker.html);
-                infowindow.open(mapDetails, marker);
-                // removeMarker(marker, markerId); // remove it
-            });
-        };
+	  
 	  
 	  
 	  
@@ -205,6 +112,7 @@
       // Bias the autocomplete object to the user's geographical location,
       // as supplied by the browser's 'navigator.geolocation' object.
       function geolocate() {
+		  /*
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
             var geolocation = {
@@ -221,7 +129,7 @@
 			mapDetails.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude ));
           });    
 		  	
-        }
+        }*/
       }
 	  
 
@@ -279,11 +187,24 @@
 }
 
  var obj = new pageModel();
+
+ function markerClicked(){		  
+	  var tmpPos = marker.getPosition();
+	  var tmpP = {lat:tmpPos.lat() , lng:tmpPos.lng()};
+	  console.log(tmpP);	
+	  console.log(typeof obj);	  
+	  
+  }
  
 $(document).ready(function(){
 	 // jQuery methods go here... 	
 	 ko.applyBindings(obj);
 });
+
+
+
+
+
 
 //custom ko binding to display safely the object properties even if
 //they are undefined or empty
