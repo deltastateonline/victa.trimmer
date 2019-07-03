@@ -55,12 +55,44 @@
 		
 		 marker = new google.maps.Marker({
 	        map: mapDetails,
-	        anchorPoint: new google.maps.Point(0, -29)
+	        anchorPoint: new google.maps.Point(0, -29),
+			draggable:true
 	     });
 		 
 		 $_RM.directionsService = new google.maps.DirectionsService;
 		 $_RM.directionsDisplay = new google.maps.DirectionsRenderer({map:mapDetails});
 		 $_RM.directionsDisplay.setPanel(document.getElementById('victaDirection'));
+		 
+		 
+		 
+		 
+		 
+		 mapDetails.addListener('click',function(e){
+			 
+			var lat = e.latLng.lat(); // lat of clicked point
+            var lng = e.latLng.lng(); // lng of clicked point
+            var markerId = getMarkerUniqueId(lat, lng); // an that will be used to cache this marker in markers object.
+			
+			/*
+			 marker.setIcon(({
+				url: google.maps.SymbolPath.CIRCLE,
+				size: new google.maps.Size(71, 71),
+				origin: new google.maps.Point(0, 0),
+				anchor: new google.maps.Point(17, 34),
+				scaledSize: new google.maps.Size(35, 35)
+			  }));*/
+			  marker.setPosition(new google.maps.LatLng(lat, lng));
+			  marker.setVisible(true);
+			 
+		 });
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
       }  
 	  
 	  
@@ -88,7 +120,8 @@
 	    	mapDetails.setZoom(13);  // Why 17? Because it looks good.
 	    }
         
-        marker.setIcon(/** @type {google.maps.Icon} */({
+		/*
+        marker.setIcon(({
             url: place.icon,
             size: new google.maps.Size(71, 71),
             origin: new google.maps.Point(0, 0),
@@ -99,12 +132,13 @@
           marker.setVisible(true);
           
           $_RM.startPoint = place.geometry.location ; //Set the stating point
+		  */
           
           $('#victaMaps').loadmask($_pageData.loadingMessage); 
 		  
 		  $('#victaMaps').unloadmask();
 		  
-		  console.log(ko.toJSON(place.geometry));
+		 
 		  
 		  /*
           
@@ -119,6 +153,54 @@
         	  }
           });		*/
       }
+	  
+	  
+	   /**
+         * Binds click event to given map and invokes a callback that appends a new marker to clicked location.
+         */
+        var addMarker = new google.maps.event.addListener(mapDetails, 'click', function(e) {
+            var lat = e.latLng.lat(); // lat of clicked point
+            var lng = e.latLng.lng(); // lng of clicked point
+            var markerId = getMarkerUniqueId(lat, lng); // an that will be used to cache this marker in markers object.
+            var marker = new google.maps.Marker({
+                position: getLatLng(lat, lng),
+                map: mapDetails,
+                animation: google.maps.Animation.DROP,
+                id: 'marker_' + markerId,
+                html: "    <div id='info_"+markerId+"'>\n" +
+                "        <table class=\"map1\">\n" +
+                "            <tr>\n" +
+                "                <td><a>Description:</a></td>\n" +
+                "                <td><textarea  id='manual_description' placeholder='Description'></textarea></td></tr>\n" +
+                "            <tr><td></td><td><input type='button' value='Save' onclick='saveData("+lat+","+lng+")'/></td></tr>\n" +
+                "        </table>\n" +
+                "    </div>"
+            });
+            markers[markerId] = marker; // cache marker in markers object
+            bindMarkerEvents(marker); // bind right click event to marker
+            bindMarkerinfo(marker); // bind infowindow with click event to marker
+        });
+
+        /**
+         * Binds  click event to given marker and invokes a callback function that will remove the marker from map.
+         * @param {!google.maps.Marker} marker A google.maps.Marker instance that the handler will binded.
+         */
+        var bindMarkerinfo = function(marker) {
+            new google.maps.event.addListener(marker, "click", function (point) {
+                var markerId = getMarkerUniqueId(point.latLng.lat(), point.latLng.lng()); // get marker id by using clicked point's coordinate
+                var marker = markers[markerId]; // find marker
+                infowindow = new google.maps.InfoWindow();
+                infowindow.setContent(marker.html);
+                infowindow.open(mapDetails, marker);
+                // removeMarker(marker, markerId); // remove it
+            });
+        };
+	  
+	  
+	  
+	  
+	  
+	  
 
       // Bias the autocomplete object to the user's geographical location,
       // as supplied by the browser's 'navigator.geolocation' object.
@@ -193,70 +275,7 @@
 	self.reset = function(){		
 		return self.allItems.removeAll();	
 	}
-	
-	/**
-		given a point get the driving
-	**/
-	self.plotMap = function(rootObject, mapPoint){
-		
-		//self.currentSelection.init(mapPoint);
-		
-		$('#victaMaps').loadmask('Loading Route, please wait...');
-		
-		 var cMapPoint = ko.toJS(mapPoint);		 
-		 var centrePoint = {lat: parseFloat(cMapPoint.lat), lng: parseFloat(cMapPoint.lng)};
-		 
-		 self.currentSelectionId(cMapPoint.id)
-		 
-		 $_RM.endPoint = new google.maps.LatLng(centrePoint.lat, centrePoint.lng);
 
-		 var request = {
-	        origin : $_RM.startPoint,
-	        destination : $_RM.endPoint,
-	        travelMode : google.maps.TravelMode.DRIVING
-	    };		 
-		
-		 $_RM.directionsService.route(request, function(response, status) {
-	        if (status == google.maps.DirectionsStatus.OK) {
-	        	$_RM.directionsDisplay.setDirections(response);
-	        	$('#victaMaps').unloadmask();
-	        }
-	    });	
-		 
-	 }
-	/*
-		open the map in 
-	*/
-	self.gotoMap = function(rootObject, mapPoint){	
-		
-		 var cMapPoint = ko.toJS(mapPoint);		 
-		 var centrePoint = {lat: parseFloat(cMapPoint.lat), lng: parseFloat(cMapPoint.lng)};
-		 
-		 // If it's an iPhone..
-		    if ((navigator.platform.indexOf("iPhone") !== -1) || (navigator.platform.indexOf("iPod") !== -1)) {
-		      function iOSversion() {
-		        if (/iP(hone|od|ad)/.test(navigator.platform)) {
-		          // supports iOS 2.0 and later: <http://bit.ly/TJjs1V>
-		          var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
-		          return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
-		        }
-		      }
-		      var ver = iOSversion() || [0];
-
-		      if (ver[0] >= 6) {
-		        protocol = 'maps://';
-		      } else {
-		        protocol = 'http://';
-
-		      }
-		      window.location = protocol + 'maps.apple.com/maps?daddr=' + cMapPoint.lat + ',' + cMapPoint.lng + '&amp;ll=';
-		    }
-		    else {
-		      window.open('http://maps.google.com?daddr=' + cMapPoint.lat + ',' + cMapPoint.lng + '&amp;ll=');
-		    }
-		 
-		 
-	}
 }
 
  var obj = new pageModel();

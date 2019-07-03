@@ -63,9 +63,9 @@
 <div style='overflow-y:scroll;height:400px' id='resultDiv'>
 <!-- ko foreach :pageTab.allItems() -->
 <div class="eachResult" data-bind="css:{panelSelected: $data.id() == pageTab.currentSelectionId()}">
-		<a href="javascript:void(0)" data-bind="click:$root.plotMap.bind($data,$parent)" title="Click for directions"><strong data-bind="safeText:$data.company, emptyText:'N/A'" ></strong></a><br />	
+		<a href="javascript:void(0)"  title="Click for directions"><strong data-bind="safeText:$data.company, emptyText:'N/A'" ></strong></a><br />	
 		<i data-bind="safeText:$data.distance, emptyText:'N/A'"></i><i> Km</i>
-		<a class="u-pull-right" style="font-size:1.2em" href="javascript:void(0)" data-bind="click:$root.gotoMap.bind($data,$parent)" title="Open in Google Maps"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
+		<a class="u-pull-right" style="font-size:1.2em" href="javascript:void(0)"  title="Open in Google Maps"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
 		<br />		
 		<span data-bind="safeText:$data.street, emptyText:'N/A'"></span> ,<br />
 		<span data-bind="safeText:$data.state, emptyText:'N/A'"></span> <span data-bind="safeText:$data.postcode, emptyText:'N/A'"></span><br />		
