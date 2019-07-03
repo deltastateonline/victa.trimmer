@@ -99,20 +99,13 @@
 		  $('#victaMaps').unloadmask();
       }
 	  
-	 
-	  
-	  
-	  
-	  
-	  
-	  
 	  
 	  
 
       // Bias the autocomplete object to the user's geographical location,
       // as supplied by the browser's 'navigator.geolocation' object.
       function geolocate() {
-		  /*
+		
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
             var geolocation = {
@@ -129,7 +122,7 @@
 			mapDetails.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude ));
           });    
 		  	
-        }*/
+        }
       }
 	  
 

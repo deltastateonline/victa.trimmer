@@ -1,4 +1,4 @@
- /**
+   /**
          * Binds click event to given map and invokes a callback that appends a new marker to clicked location.
          */
         var addMarker = new google.maps.event.addListener(mapDetails, 'click', function(e) {
@@ -38,4 +38,5 @@
                 // removeMarker(marker, markerId); // remove it
             });
         };
+	  
 	  
