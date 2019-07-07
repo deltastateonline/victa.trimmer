@@ -52,7 +52,7 @@
       <div class="twelve columns" style="margin-top: 2%">      	
       	<div class="tag">
 			<label style="font-size:1.2em;background-color:#FFFFFF"><center>{{$companyTitle}}</center></label>
-			<div style="font-size:0.7em;" data-bind="template:{name:'budgetTmpl', data:$root, as:'pageTab'}"></div>
+			<div style="font-size:0.7em;" data-bind="template:{name:'budgetTmpl', data:$root.currentSelection, as:'pageTab'}"></div>
 		</div>		
 		<div id="victaMaps" class="u-full-width" style="width:100%;height:500px;background-color:#EFEFEF">Render Map Here</div>	
        </div> 	      
@@ -60,10 +60,32 @@
 
 </div> 
 <script id="budgetTmpl" type="text/html">
-<!-- ko if :pageTab.totalRecords() > 0 -->
-	<div style='overflow-y:scroll;height:400px' id='resultDiv'>
 
+	<div style='overflow-y:scroll;height:400px' id='resultDiv'>
+		<div>Longitude 
+			<input type="text" data-bind="value:$data.lng, emptyText:'N/A'" />
+		</div>
+		<div>Latitude
+			<input type="text" data-bind="value:$data.lat, emptyText:'N/A'" />
+		</div>
+		<div>Work Type
+			<input type="text" data-bind="value:$data.worktype, emptyText:'N/A'" />
+		</div>
+		<div>Budget
+			<input type="text" data-bind="safeText:$data.budget, emptyText:'N/A'" />
+		</div>
+		<div>Budget Description
+			<textarea  data-bind="value:$data.description" /></textarea>
+		</div>
+		<div>Division 
+			<input type="text" data-bind="safeText:$data.division, emptyText:'N/A'" />
+		</div>
+		<div>Councillor
+			<input type="text" data-bind="safeText:$data.councillor, emptyText:'N/A'" />
+		</div>
+		
 	</div>
+<!-- ko if :pageTab.currentSelection -->
 <!-- /ko -->
 
 </script>

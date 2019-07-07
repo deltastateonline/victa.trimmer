@@ -92,7 +92,13 @@
           marker.setPosition(place.geometry.location);
           marker.setVisible(true);
           
-          $_RM.startPoint = place.geometry.location ; //Set the stating point
+          // $_RM.startPoint = place.geometry.location ; //Set the stating point
+          
+          /*
+           *  var tmpPos = marker.getPosition();*/
+          var newPoint = {lat:place.geometry.location.lat() , lng:place.geometry.location.lng()};	  
+          obj.currentSelection.init(newPoint);
+           
           
           $('#victaMaps').loadmask($_pageData.loadingMessage); 
 		  
@@ -151,13 +157,19 @@
 	 var self = this;
 	 
 	 self.selected = false;
-	 self.pointData = ko.observable({});	
+	 //self.pointData = ko.observable({});	
+	 self.lng = ko.observable(0.0);	
+	 self.lat = ko.observable(0.0);	
+	 
  }
  
  currentPoint.prototype.init = function(data){
 		var self = this;		
-		self.pointData(data);
+		self.lng(data.lng);
+		self.lat(data.lat)
 		self.selected = true;
+		
+		console.log(data);
 }
  
  
@@ -183,9 +195,10 @@
 
  function markerClicked(){		  
 	  var tmpPos = marker.getPosition();
-	  var tmpP = {lat:tmpPos.lat() , lng:tmpPos.lng()};
-	  console.log(tmpP);	
-	  console.log(typeof obj);	  
+	  var newPoint = {lat:tmpPos.lat() , lng:tmpPos.lng()};
+	  
+	  obj.currentSelection.init(newPoint);
+	 
 	  
   }
  
