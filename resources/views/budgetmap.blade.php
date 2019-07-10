@@ -1,11 +1,13 @@
-<html>  
+<html lang="en">  
 <head>  
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!--  <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{{$title}}</title>
-    <link href="/css/starveling/css/starveling.css" rel="stylesheet" type="text/css"/>
-	<link href="/css/starveling/css/normalize.css" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
 	<link href="/css/sticky-footer.css" rel="stylesheet">
 	<link href="/css/jquery.loadmask.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Alegreya:400,700|Roboto+Condensed' rel='stylesheet' type='text/css'>
@@ -13,16 +15,10 @@
 	<script src="https://use.fontawesome.com/9a293d9ea0.js"></script>   
     <script type='text/javascript' src='/scripts/knockout-3.4.0.js'></script>
     <script type='text/javascript' src='/scripts/knockout.mapping.js'></script>    
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-	<script type='text/javascript' src='/scripts/jquery.loadmask.js'></script>    
+	<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script> -->
 	
-	<script type="text/javascript" src="/scripts/maps.budget.js"> </script>
+		
 	
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAiG-W9yHgCjc1ugC6_M3-gn1wxho8gAuM&libraries=places&callback=initAutocomplete" async defer></script>
-	
-	<!--
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAiG-W9yHgCjc1ugC6_M3-gn1wxho8gAuM&libraries=places&callback=initAutocomplete" async defer></script>
-	-->
 
 
 	<script type="text/javascript">
@@ -34,57 +30,56 @@
 	
 </head>  
 <body onLoad="geolocate()">  
-<div class="container">  
-	<div class="row" >
-	<div class="six columns" style="font-size:2em">{{$title}}</div>
-		<div class="six columns" style="font-size:0.8em;"><br />
-		<a href="">Moreton Bay</a></div>
-	</div>
-    <div class="row">
-      <div class="twelve columns" style="margin-top: 1%">
-	   <div id="locationField" class="twelve columns">
-	   	<label>Enter an address or a suburb.</label>
-		  <input id="autocomplete" class="u-full-width" placeholder="Enter an address or a suburb"  onFocus="geolocate()" type="text"></input>
-		</div>
-       </div> 
-    </div>	
-	<div class="row">
-      <div class="twelve columns" style="margin-top: 2%">      	
-      	<div class="tag">
-			<label style="font-size:1.2em;background-color:#FFFFFF"><center>{{$companyTitle}}</center></label>
-			<div style="font-size:0.7em;" data-bind="template:{name:'budgetTmpl', data:$root.currentSelection, as:'pageTab'}"></div>
-		</div>		
-		<div id="victaMaps" class="u-full-width" style="width:100%;height:500px;background-color:#EFEFEF">Render Map Here</div>	
-       </div> 	      
-    </div>	
+<div class="container-fluid">  
 
+		<div class="row" >
+			<div class="col" style="font-size:2em">{{$title}}</div>
+			<div class="col" style="font-size:0.8em;"><br /><a href="">Moreton Bay</a></div>
+		</div>		
+		<form>
+		    <div id="locationField" class="form-group">
+		   	  <label>Enter an address or a suburb.</label>
+			  <input id="autocomplete" placeholder="Enter an address or a suburb"  onFocus="geolocate()" type="text" class="form-control"></input>
+			</div> 
+		</form>	    
+		<div class="row">	       	
+	      	<div class="col-2">
+				<label style="font-size:1.2em;background-color:#FFFFFF"><center>{{$companyTitle}}</center></label>
+				<div style="font-size:0.7em;" data-bind="template:{name:'budgetTmpl', data:$root.currentSelection, as:'pageTab'}"></div>
+			</div>		
+			<div id="victaMaps" class="col-10" style="width:100%;height:500px;background-color:#EFEFEF">Render Map Here</div>	                
+	    </div>	
 </div> 
 <script id="budgetTmpl" type="text/html">
 
-	<div style='overflow-y:scroll;height:400px' id='resultDiv'>
-		<div>Longitude 
-			<input type="text" data-bind="value:$data.lng, emptyText:'N/A'" />
+<form>
+	<div  id='resultDiv' class="row1">
+		<div class="form-group"><label for="">Longitude</label>
+			<input type="text" data-bind="value:$data.lng, emptyText:'N/A'" class="form-control" />
 		</div>
-		<div>Latitude
-			<input type="text" data-bind="value:$data.lat, emptyText:'N/A'" />
+		<div class="form-group"><label for="">Latitude</label>
+			<input type="text" data-bind="value:$data.lat, emptyText:'N/A'" class="form-control"/>
 		</div>
-		<div>Work Type
-			<input type="text" data-bind="value:$data.worktype, emptyText:'N/A'" />
+		<div class="form-group"><label for="">Work Type</label>
+			<input type="text" data-bind="value:$data.worktype, emptyText:'N/A'" class="form-control" list="worktypeList"/>
 		</div>
-		<div>Budget
-			<input type="text" data-bind="safeText:$data.budget, emptyText:'N/A'" />
+		<div class="form-group"><label for="">Budget</label>
+			<input type="text" data-bind="safeText:$data.budget, emptyText:'N/A'" class="form-control"/>
 		</div>
-		<div>Budget Description
-			<textarea  data-bind="value:$data.description" /></textarea>
+		<div class="form-group"><label for="">Budget Description</label>
+			<textarea  data-bind="value:$data.description" class="form-control"/></textarea>
 		</div>
-		<div>Division 
-			<input type="text" data-bind="safeText:$data.division, emptyText:'N/A'" />
+		<div class="form-group"><label for="">Divisions </label>
+			<select data-bind="options:$root.divisions,  optionsText:'name', optionsValue:'id', value:$data.division" class="form-control"/></select>
 		</div>
-		<div>Councillor
-			<input type="text" data-bind="safeText:$data.councillor, emptyText:'N/A'" />
+		<div class="form-group"><label for="">Councillors</label>
+			<select  data-bind="options:$root.councillors, optionsText:'name', optionsValue:'id', value:$data.councillor" class="form-control"/></select>
 		</div>
-		
-	</div>
+		<div class="form-group">
+			<input class="btn btn-primary" type="button" value="Add Budget">
+		</div>		
+	</div>	
+</form>
 <!-- ko if :pageTab.currentSelection -->
 <!-- /ko -->
 
@@ -142,5 +137,28 @@
         
       </div>
     </footer>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+   
+   <script type='text/javascript' src='/scripts/jquery.loadmask.js'></script> 
+	<script type="text/javascript" src="/scripts/maps.budget.js"> </script>	
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAiG-W9yHgCjc1ugC6_M3-gn1wxho8gAuM&libraries=places&callback=initAutocomplete" async defer></script>
+    
+    <datalist id="worktypeList">
+			<option value="Road Works">
+			<option value="Sport">
+			<option value="Civil Works">
+			<option value="Storm Works">
+			<option value="Bus Stops Works">
+			<option value="Design Work">
+			<option value="Lift">
+			<option value="Water">
+			<option value="Playgroud">
+			<option value="Pedestrian">
+			<option value="Footpaths">
+			<option value="Lighting">
+	</datalist>
 </body>  
 </html> 

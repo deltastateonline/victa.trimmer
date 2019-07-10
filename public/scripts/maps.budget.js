@@ -7,6 +7,9 @@
 
       var placeSearch, autocomplete,mapDetails;
       
+      
+      
+      
       var $_RM = {
     		 
     		  startPoint : {},
@@ -161,9 +164,20 @@
 	 self.lng = ko.observable(0.0);	
 	 self.lat = ko.observable(0.0);	
 	 
+	 self.worktype = ko.observable("");	
+	 self.budget = ko.observable(0);	
+	 self.description = ko.observable("Some kind of text");	
+	 self.division = ko.observable(0);	
+	 self.councillor = ko.observable(0);
+	 
+	 self.division.subscribe(function(divisionId) {		
+		 self.councillor(divisionId);
+	 });
+
+	 
  }
  
- currentPoint.prototype.init = function(data){
+currentPoint.prototype.init = function(data){
 		var self = this;		
 		self.lng(data.lng);
 		self.lat(data.lat)
@@ -171,6 +185,8 @@
 		
 		console.log(data);
 }
+ 
+
  
  
  function pageModel(){
@@ -188,7 +204,28 @@
 	self.reset = function(){		
 		return self.allItems.removeAll();	
 	}
-
+	
+	
+	self.worktypes = ko.observableArray([
+	       { id: 0, name: '-- Select Worktype --' },{ id: 1, name: 'Division 1' }, { id: 2, name: 'Division 2' }, 
+ 	 ]);
+	
+	
+	self.divisions = ko.observableArray([
+	    { id: 0, name: '-- Select Division --' },{ id: 1, name: 'Division 1' }, { id: 2, name: 'Division 2' },
+	    { id: 3, name: 'Division 3' },{ id: 4, name: 'Division 4' }, { id: 5, name: 'Division 5' },
+	    { id: 6, name: 'Division 6' },{ id: 7, name: 'Division 7' }, { id: 8, name: 'Division 8' },
+	    { id: 9, name: 'Division 9' },{ id: 10, name: 'Division 10' }, { id: 11, name: 'Division 11' }, { id: 12, name: 'Division 12' }
+	 ]);
+	
+	self.councillors = ko.observableArray(		
+	[{ id: 0, name: '-- Select Councillors --' },{ id: 1, name: 'Councillor Brooke Savige' }, { id: 2, name: 'Peter Flannery' }, 
+	 { id: 3, name: 'Councillor Adam Hain' }, { id: 4, name: 'Councillor Julie Greer' },
+	 { id: 5, name: 'James Houghton' }, { id: 6, name: 'Councillor Koliana Winchester' },
+	 { id: 7, name: 'Divisional Councillor Denise Sims' }, { id: 8, name: 'Councillor Mick Gillam' },
+	 { id: 9, name: 'Deputy Mayor and Divisional Councillor Mike Charlton' }, { id: 10, name: 'Councillor Matt Constance' },
+	 { id: 11, name: 'Councillor Darren Grimwade' }, { id: 12, name: 'Councillor Adrian Raedel' },
+	 ]);
 }
 
  var obj = new pageModel();
