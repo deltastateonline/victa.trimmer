@@ -95,16 +95,11 @@
           marker.setPosition(place.geometry.location);
           marker.setVisible(true);
           
-          // $_RM.startPoint = place.geometry.location ; //Set the stating point
-          
-          /*
-           *  var tmpPos = marker.getPosition();*/
           var newPoint = {lat:place.geometry.location.lat() , lng:place.geometry.location.lng()};	  
           obj.currentSelection.init(newPoint);
-           
+          obj.addressString(document.getElementById('autocomplete').value);
           
-          $('#victaMaps').loadmask($_pageData.loadingMessage); 
-		  
+          $('#victaMaps').loadmask($_pageData.loadingMessage); 		  
 		  $('#victaMaps').unloadmask();
       }
 	  
@@ -165,7 +160,7 @@
 	 self.lat = ko.observable(0.0);	
 	 
 	 self.worktype = ko.observable("");	
-	 self.budget = ko.observable(0);	
+	 self.budget = ko.observable();	
 	 self.description = ko.observable("Some kind of text");	
 	 self.division = ko.observable(0);	
 	 self.councillor = ko.observable(0);
@@ -182,11 +177,7 @@ currentPoint.prototype.init = function(data){
 		self.lng(data.lng);
 		self.lat(data.lat)
 		self.selected = true;
-		
-		console.log(data);
 }
- 
-
  
  
  function pageModel(){
@@ -196,6 +187,8 @@ currentPoint.prototype.init = function(data){
 	self.currentSelection = new currentPoint({});
 	
 	self.currentSelectionId = ko.observable();	
+	
+	self.addressString = ko.observable("Brendale Business Park, South Pine Road, Brendale QLD, Australia");	
 	
 	self.totalRecords = ko.computed(function(){
 		return self.allItems().length;
@@ -226,6 +219,15 @@ currentPoint.prototype.init = function(data){
 	 { id: 9, name: 'Deputy Mayor and Divisional Councillor Mike Charlton' }, { id: 10, name: 'Councillor Matt Constance' },
 	 { id: 11, name: 'Councillor Darren Grimwade' }, { id: 12, name: 'Councillor Adrian Raedel' },
 	 ]);
+	
+	
+	
+	self.saveData = function(budgetData){
+		
+		console.log(obj.addressString());
+		//console.log(ko.unwrap(rootObject));
+		console.log(ko.toJSON(budgetData));
+	}
 }
 
  var obj = new pageModel();

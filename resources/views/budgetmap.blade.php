@@ -39,7 +39,7 @@
 		<form>
 		    <div id="locationField" class="form-group">
 		   	  <label>Enter an address or a suburb.</label>
-			  <input id="autocomplete" placeholder="Enter an address or a suburb"  onFocus="geolocate()" type="text" class="form-control"></input>
+			  <input id="autocomplete" placeholder="Enter an address or a suburb" data-bind="value:$root.addressString" onFocus="geolocate()" type="text" class="form-control"></input>
 			</div> 
 		</form>	    
 		<div class="row">	       	
@@ -54,19 +54,19 @@
 
 <form>
 	<div  id='resultDiv' class="row1">
-		<div class="form-group"><label for="">Longitude</label>
-			<input type="text" data-bind="value:$data.lng, emptyText:'N/A'" class="form-control" />
+		<div class="form-group"><label for="lng">Longitude</label>
+			<input type="text" data-bind="value:$data.lng" class="form-control" />
 		</div>
-		<div class="form-group"><label for="">Latitude</label>
-			<input type="text" data-bind="value:$data.lat, emptyText:'N/A'" class="form-control"/>
+		<div class="form-group"><label for="lat">Latitude</label>
+			<input type="text" data-bind="value:$data.lat" class="form-control"/>
 		</div>
-		<div class="form-group"><label for="">Work Type</label>
-			<input type="text" data-bind="value:$data.worktype, emptyText:'N/A'" class="form-control" list="worktypeList"/>
+		<div class="form-group"><label for="worktype">Work Type</label>
+			<input type="text" data-bind="value:$data.worktype" class="form-control" list="worktypeList"/>
 		</div>
-		<div class="form-group"><label for="">Budget</label>
-			<input type="text" data-bind="safeText:$data.budget, emptyText:'N/A'" class="form-control"/>
+		<div class="form-group"><label for="budget">Budget</label>
+			<input name="budget" type="text" class="form-control"  data-bind="value:$data.budget" />
 		</div>
-		<div class="form-group"><label for="">Budget Description</label>
+		<div class="form-group"><label for="description">Budget Description</label>
 			<textarea  data-bind="value:$data.description" class="form-control"/></textarea>
 		</div>
 		<div class="form-group"><label for="">Divisions </label>
@@ -76,7 +76,7 @@
 			<select  data-bind="options:$root.councillors, optionsText:'name', optionsValue:'id', value:$data.councillor" class="form-control"/></select>
 		</div>
 		<div class="form-group">
-			<input class="btn btn-primary" type="button" value="Add Budget">
+			<input class="btn btn-primary" type="button" value="Add Budget" data-bind="click:$root.saveData.bind($data)">
 		</div>		
 	</div>	
 </form>
